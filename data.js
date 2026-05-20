@@ -114,6 +114,29 @@ const fileStructure = {
                                 size: "1.2 MB",
                                 modified: "2024-02-15"
                             }
+            "SEM-4": {
+                type: "folder",
+                children: {
+                    "COURSE": {
+                        type: "folder",
+                        children: {
+                            "UNIT 1": {
+                                type: "folder",
+                                children: {
+                                    "LESSON 1-10": {
+                                        type: "pdf",
+                                        path: "pdfs/sem4/course/unit1/lesson1-10.pdf",
+                                        size: "2.5 MB",
+                                        modified: "2024-01-15"
+                                    },
+                                    "LESSON 11-20": {
+                                        type: "pdf",
+                                        path: "pdfs/sem4/course/unit1/lesson11-20.pdf",
+                                        size: "3.1 MB",
+                                        modified: "2024-01-16"
+                                    }
+                                }
+                            },
                         }
                     }
                 }
