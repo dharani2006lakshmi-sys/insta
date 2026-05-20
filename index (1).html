@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>StudyDrive Ultra</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="sidebar">
+  <h2>📁 StudyDrive</h2>
+  <ul>
+    <li onclick="goHome()">🏠 Home</li>
+    <li onclick="showStarred()">⭐ Starred</li>
+  </ul>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <button onclick="goBack()">←</button>
+    <div id="path">MAIN</div>
+    <input type="text" id="search" placeholder="Search..." oninput="searchFiles()">
+  </div>
+
+  <div id="suggestions"></div>
+  <div id="content" class="content"></div>
+</div>
+
+<div id="pdfModal" class="modal">
+  <div class="modal-content">
+    <span onclick="closeModal()" class="close">✖</span>
+    <iframe id="pdfFrame"></iframe>
+    <button onclick="downloadPDF()">Download</button>
+    <button onclick="sharePDF()">Share</button>
+  </div>
+</div>
+
+<div class="chatbox">
+  <div id="chatMessages"></div>
+  <input id="chatInput" placeholder="Ask something..." onkeydown="handleChat(event)">
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

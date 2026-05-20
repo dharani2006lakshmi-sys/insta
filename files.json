@@ -1,0 +1,23 @@
+{
+  "name": "MAIN",
+  "type": "folder",
+  "children": [
+    {
+      "name": "SEM-3",
+      "type": "folder",
+      "children": [
+        {
+          "name": "UNIT 1",
+          "type": "folder",
+          "children": [
+            {
+              "name": "Sample PDF",
+              "type": "file",
+              "url": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
