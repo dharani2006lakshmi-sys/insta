@@ -1,16 +1,49 @@
+// 🔑 YOUR SUPABASE CONFIG
+const SUPABASE_URL = "https://zzgqpgdfanyviabhzypk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_R_qrpmmg_Sww2MT1fE4TLw_Hoksy20R";
+
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 let root, current;
 let historyStack = [];
-let starred = JSON.parse(localStorage.getItem("starred")) || [];
 let currentPDF = "";
 
-fetch("files.json")
-.then(res => res.json())
-.then(data => {
-  root = data;
-  current = data;
-  render();
-});
+// 🚀 LOAD DATA FROM SUPABASE
+async function loadFiles() {
+  const { data, error } = await supabaseClient.from("files").select("*");
 
+  if (error) {
+    console.error(error);
+    alert("Error loading data");
+    return;
+  }
+
+  root = buildTree(data);
+  current = root;
+  render();
+}
+
+loadFiles();
+
+// 🌳 BUILD TREE
+function buildTree(data) {
+  let map = {};
+  data.forEach(i => map[i.id] = {...i, children: []});
+
+  let root = { name: "MAIN", children: [] };
+
+  data.forEach(i => {
+    if (i.parent) {
+      map[i.parent].children.push(map[i.id]);
+    } else {
+      root.children.push(map[i.id]);
+    }
+  });
+
+  return root;
+}
+
+// 🎨 RENDER UI
 function render(list = current.children) {
   document.getElementById("path").innerText = getPath();
   const content = document.getElementById("content");
@@ -20,25 +53,17 @@ function render(list = current.children) {
     const div = document.createElement("div");
     div.className = "card";
 
-    const isStarred = starred.find(s => s.name === item.name);
-
-    const star = document.createElement("div");
-    star.className = "star";
-    star.innerText = isStarred ? "⭐" : "☆";
-    star.onclick = (e) => toggleStar(e, item);
-
     div.innerHTML = `
       <h3>${item.type==="folder"?"📁":"📄"}</h3>
       <p>${item.name}</p>
     `;
 
-    div.appendChild(star);
     div.onclick = () => openItem(item);
-
     content.appendChild(div);
   });
 }
 
+// 📂 NAVIGATION
 function getPath() {
   return historyStack.map(f => f.name).join(" / ") + " / " + current.name;
 }
@@ -66,51 +91,60 @@ function goHome(){
   render();
 }
 
-function searchFiles(){
-  const q=document.getElementById("search").value.toLowerCase();
-  let results=[];
+// ➕ ADD FOLDER
+async function addFolder() {
+  const name = prompt("Enter folder name:");
+  if (!name) return;
 
-  function scan(n){
-    if(n.type==="file"){
-      if(
-        n.name.toLowerCase().includes(q) ||
-        (n.tags && n.tags.join(" ").includes(q))
-      ){
-        results.push(n);
-      }
+  const { error } = await supabaseClient.from("files").insert([
+    { name: name, type: "folder", parent: current.id || null }
+  ]);
+
+  if (error) {
+    alert("Error adding folder");
+    return;
+  }
+
+  loadFiles();
+}
+
+// 📤 UPLOAD PDF
+async function uploadPDF(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const fileName = Date.now() + "_" + file.name;
+
+  const { error: uploadError } = await supabaseClient.storage
+    .from("pdf")
+    .upload(fileName, file);
+
+  if (uploadError) {
+    alert("Upload failed");
+    console.error(uploadError);
+    return;
+  }
+
+  const url = `${SUPABASE_URL}/storage/v1/object/public/pdf/${fileName}`;
+
+  const { error: dbError } = await supabaseClient.from("files").insert([
+    {
+      name: file.name,
+      type: "file",
+      url: url,
+      parent: current.id || null
     }
-    if(n.children) n.children.forEach(scan);
+  ]);
+
+  if (dbError) {
+    alert("Database error");
+    return;
   }
 
-  scan(root);
-
-  const suggestions = document.getElementById("suggestions");
-  suggestions.innerHTML = results.slice(0,5).map(r =>
-    `<div onclick="openPDF('${r.url}')">${r.name}</div>`
-  ).join("");
-
-  render(results.length ? results : current.children);
+  loadFiles();
 }
 
-function toggleStar(e,item){
-  e.stopPropagation();
-
-  const index = starred.findIndex(s => s.name === item.name);
-
-  if(index>-1){
-    starred.splice(index,1);
-  } else {
-    starred.push(item);
-  }
-
-  localStorage.setItem("starred",JSON.stringify(starred));
-  render();
-}
-
-function showStarred(){
-  render(starred);
-}
-
+// 📄 PDF VIEW
 function openPDF(url){
   currentPDF = url;
   document.getElementById("pdfModal").style.display="block";
@@ -130,42 +164,16 @@ function sharePDF(){
   alert("Link copied!");
 }
 
-/* Chatbot */
-function handleChat(e){
-  if(e.key==="Enter"){
-    const input=e.target.value.toLowerCase();
+// 🔍 SEARCH
+function searchFiles(){
+  const q=document.getElementById("search").value.toLowerCase();
+  let results=[];
 
-    addMessage("You: " + input);
-
-    let results=[];
-
-    function scan(n){
-      if(n.type==="file"){
-        if(
-          n.name.toLowerCase().includes(input) ||
-          (n.tags && n.tags.join(" ").includes(input))
-        ){
-          results.push(n);
-        }
-      }
-      if(n.children) n.children.forEach(scan);
-    }
-
-    scan(root);
-
-    if(results.length){
-      addMessage("Bot: Found " + results.length + " files");
-      render(results);
-    } else {
-      addMessage("Bot: No results found");
-    }
-
-    e.target.value="";
+  function scan(n){
+    if(n.type==="file" && n.name.toLowerCase().includes(q)) results.push(n);
+    if(n.children) n.children.forEach(scan);
   }
-}
 
-function addMessage(msg){
-  const box=document.getElementById("chatMessages");
-  box.innerHTML += `<div>${msg}</div>`;
-  box.scrollTop = box.scrollHeight;
+  scan(root);
+  render(results);
 }
