@@ -3,6 +3,9 @@
 <head>
   <title>StudyDrive Ultra</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -15,28 +18,30 @@
 </div>
 
 <div class="main">
+
   <div class="topbar">
     <button onclick="goBack()">←</button>
     <div id="path">MAIN</div>
     <input type="text" id="search" placeholder="Search..." oninput="searchFiles()">
+    <button onclick="addFolder()">➕</button>
+    <input type="file" onchange="uploadPDF(event)">
   </div>
 
   <div id="suggestions"></div>
   <div id="content" class="content"></div>
+
 </div>
 
+<!-- PDF MODAL -->
 <div id="pdfModal" class="modal">
   <div class="modal-content">
     <span onclick="closeModal()" class="close">✖</span>
     <iframe id="pdfFrame"></iframe>
-    <button onclick="downloadPDF()">Download</button>
-    <button onclick="sharePDF()">Share</button>
+    <div class="actions">
+      <button onclick="downloadPDF()">Download</button>
+      <button onclick="sharePDF()">Share</button>
+    </div>
   </div>
-</div>
-
-<div class="chatbox">
-  <div id="chatMessages"></div>
-  <input id="chatInput" placeholder="Ask something..." onkeydown="handleChat(event)">
 </div>
 
 <script src="app.js"></script>
