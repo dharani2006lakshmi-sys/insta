@@ -3,27 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CODETANTRA ANSWER KEYS - Document Library</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <title>CODETANTRA ANSWER KEYS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #0a0e1a;
-            --bg-secondary: #12182b;
-            --bg-card: #1a2137;
-            --accent-primary: #6366f1;
-            --accent-secondary: #8b5cf6;
-            --accent-success: #10b981;
-            --accent-danger: #ef4444;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --border-color: #2d3548;
+            --bg-primary: #020c02;
+            --bg-secondary: #041204;
+            --bg-card: #071a07;
+            --bg-card2: #0a1f0a;
+            --accent-primary: #00ff41;
+            --accent-secondary: #00cc33;
+            --accent-dim: #00802a;
+            --accent-danger: #ff3333;
+            --accent-warn: #ffaa00;
+            --text-primary: #e0ffe0;
+            --text-secondary: #5aff7a;
+            --text-dim: #2a7a3a;
+            --border-color: #0d3d0d;
+            --border-glow: #00ff4144;
+            --glow: 0 0 10px #00ff4133, 0 0 30px #00ff4111;
+            --glow-strong: 0 0 8px #00ff41, 0 0 20px #00ff4166;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Outfit', sans-serif;
@@ -31,19 +33,36 @@
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
+        /* Scanline overlay */
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,255,65,0.015) 2px,
+                rgba(0,255,65,0.015) 4px
+            );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Grid bg */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(0,255,65,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,65,0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
             pointer-events: none;
             z-index: 0;
         }
@@ -56,14 +75,15 @@
             z-index: 1;
         }
 
-        /* Header */
+        /* ── HEADER ── */
         header {
             background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
-            padding: 30px;
-            border-radius: 20px;
-            margin-bottom: 30px;
+            padding: 28px 32px;
+            border-radius: 12px;
+            margin-bottom: 24px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            border-top: 2px solid var(--accent-primary);
+            box-shadow: var(--glow), inset 0 1px 0 rgba(0,255,65,0.1);
             position: relative;
             overflow: hidden;
         }
@@ -71,11 +91,9 @@
         header::before {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.1), transparent 70%);
+            top: -60%; right: -10%;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(0,255,65,0.07), transparent 70%);
             pointer-events: none;
         }
 
@@ -83,901 +101,845 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
             position: relative;
             z-index: 1;
-            flex-wrap: wrap;
-            gap: 20px;
+        }
+
+        .logo-area { display: flex; align-items: center; gap: 14px; }
+
+        .logo-icon {
+            font-size: 2.4em;
+            filter: drop-shadow(0 0 8px var(--accent-primary));
         }
 
         h1 {
-            font-size: 2.5em;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 2em;
+            font-weight: 400;
+            color: var(--accent-primary);
+            text-shadow: var(--glow-strong);
+            letter-spacing: 2px;
         }
 
         .subtitle {
-            color: var(--text-secondary);
-            margin-top: 5px;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.9em;
+            color: var(--text-dim);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8em;
+            letter-spacing: 1px;
+            margin-top: 2px;
         }
 
-        /* Buttons */
-        button {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 10px;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 600;
-            font-size: 0.95em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+        .header-badge {
+            display: flex; align-items: center; gap: 10px;
         }
 
-        button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
+        .status-dot {
+            width: 8px; height: 8px;
+            background: var(--accent-primary);
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+            box-shadow: var(--glow-strong);
+            animation: pulse 2s infinite;
         }
 
-        button:hover::before {
-            width: 300px;
-            height: 300px;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn-secondary {
-            background: var(--bg-card);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-secondary:hover {
-            background: var(--bg-secondary);
-        }
-
-        .btn-danger {
-            background: var(--accent-danger);
-            color: white;
-        }
-
-        .btn-success {
-            background: var(--accent-success);
-            color: white;
-        }
-
-        .btn-small {
-            padding: 8px 16px;
-            font-size: 0.85em;
-        }
-
-        /* Owner Controls */
-        .owner-controls {
-            background: var(--bg-card);
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            border: 1px solid var(--border-color);
-            display: none;
-        }
-
-        .owner-controls.active {
-            display: block;
-        }
-
-        .control-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .control-header h3 {
-            color: var(--accent-primary);
-            font-size: 1.3em;
-        }
-
-        .folder-input-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .upload-area {
-            border: 2px dashed var(--border-color);
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: var(--bg-secondary);
-        }
-
-        .upload-area:hover {
-            border-color: var(--accent-primary);
-            background: var(--bg-card);
-        }
-
-        .upload-area.dragover {
-            border-color: var(--accent-success);
-            background: rgba(16, 185, 129, 0.1);
-        }
-
-        .upload-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
-        }
-
-        input[type="file"] {
-            display: none;
-        }
-
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 12px 16px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-family: 'Outfit', sans-serif;
-            font-size: 1em;
-            transition: all 0.3s ease;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
+        .status-text {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.78em;
             color: var(--text-secondary);
-            font-size: 0.9em;
-            font-weight: 500;
+            letter-spacing: 1px;
         }
 
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        /* Breadcrumb Navigation */
+        /* ── BREADCRUMB ── */
         .breadcrumb {
-            background: var(--bg-card);
-            padding: 15px 20px;
-            border-radius: 12px;
+            background: var(--bg-secondary);
+            padding: 12px 18px;
+            border-radius: 8px;
             margin-bottom: 20px;
             border: 1px solid var(--border-color);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.88em;
         }
 
         .breadcrumb-item {
-            color: var(--text-secondary);
+            color: var(--text-dim);
             cursor: pointer;
-            transition: color 0.3s ease;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.9em;
+            transition: color 0.2s;
+            padding: 2px 6px;
+            border-radius: 4px;
         }
 
-        .breadcrumb-item:hover {
-            color: var(--accent-primary);
+        .breadcrumb-item:hover { color: var(--accent-primary); background: rgba(0,255,65,0.07); }
+        .breadcrumb-item.active { color: var(--accent-primary); text-shadow: 0 0 6px var(--accent-primary); }
+        .breadcrumb-separator { color: var(--text-dim); }
+
+        /* ── EDIT MODE BAR ── */
+        #editBar {
+            display: none;
+            background: rgba(0,255,65,0.06);
+            border: 1px solid var(--accent-dim);
+            border-left: 3px solid var(--accent-primary);
+            border-radius: 8px;
+            padding: 10px 16px;
+            margin-bottom: 20px;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.82em;
         }
 
-        .breadcrumb-item.active {
-            color: var(--text-primary);
+        #editBar.active { display: flex; }
+
+        .edit-bar-label { color: var(--accent-primary); letter-spacing: 1px; }
+
+        .edit-bar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        /* ── BUTTONS ── */
+        button {
+            padding: 9px 18px;
+            border: none;
+            border-radius: 7px;
+            font-family: 'Outfit', sans-serif;
             font-weight: 600;
+            font-size: 0.88em;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.3px;
         }
 
-        .breadcrumb-separator {
-            color: var(--border-color);
+        .btn-primary {
+            background: rgba(0,255,65,0.12);
+            color: var(--accent-primary);
+            border: 1px solid var(--accent-dim);
+        }
+        .btn-primary:hover {
+            background: rgba(0,255,65,0.22);
+            box-shadow: var(--glow);
+            transform: translateY(-1px);
         }
 
-        /* File Grid */
+        .btn-secondary {
+            background: var(--bg-card2);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover { background: var(--bg-card); color: var(--accent-primary); border-color: var(--accent-dim); }
+
+        .btn-danger {
+            background: rgba(255,51,51,0.12);
+            color: var(--accent-danger);
+            border: 1px solid rgba(255,51,51,0.3);
+        }
+        .btn-danger:hover { background: rgba(255,51,51,0.22); box-shadow: 0 0 10px rgba(255,51,51,0.3); }
+
+        .btn-warn {
+            background: rgba(255,170,0,0.12);
+            color: var(--accent-warn);
+            border: 1px solid rgba(255,170,0,0.3);
+        }
+        .btn-warn:hover { background: rgba(255,170,0,0.22); }
+
+        .btn-small { padding: 6px 12px; font-size: 0.8em; }
+
+        /* ── FILE GRID ── */
         .file-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
         }
 
         .file-card, .folder-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 10px;
+            padding: 18px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
             position: relative;
             overflow: hidden;
         }
 
+        .file-card::before, .folder-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
         .file-card:hover, .folder-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
-            border-color: var(--accent-primary);
+            border-color: var(--accent-dim);
+            box-shadow: var(--glow);
+            transform: translateY(-3px);
         }
 
-        .folder-card {
-            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
-        }
+        .file-card:hover::before, .folder-card:hover::before { opacity: 1; }
 
-        .folder-icon, .file-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
-            display: block;
-        }
+        .folder-card { background: linear-gradient(135deg, var(--bg-card), var(--bg-card2)); }
 
         .folder-icon {
-            color: var(--accent-secondary);
+            font-size: 2.8em;
+            display: block;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 6px rgba(0,255,65,0.4));
         }
 
         .file-icon {
-            color: var(--accent-danger);
+            font-size: 2.8em;
+            display: block;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 4px rgba(255,51,51,0.4));
         }
 
-        .file-name, .folder-name {
+        .folder-name, .file-name {
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
             word-break: break-word;
+            font-size: 0.95em;
+            color: var(--text-primary);
         }
 
         .file-meta {
-            font-size: 0.85em;
-            color: var(--text-secondary);
-            font-family: 'Fira Code', monospace;
+            font-size: 0.78em;
+            color: var(--text-dim);
+            font-family: 'Share Tech Mono', monospace;
+            margin-bottom: 12px;
         }
 
         .file-actions {
             display: flex;
-            gap: 8px;
-            margin-top: 15px;
-            padding-top: 15px;
+            gap: 6px;
+            flex-wrap: wrap;
+            padding-top: 12px;
             border-top: 1px solid var(--border-color);
         }
 
-        .file-actions button {
-            flex: 1;
-            padding: 8px 12px;
-            font-size: 0.85em;
+        /* ── ADD CARDS ── */
+        .add-pdf-card {
+            border: 2px dashed var(--accent-dim);
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            min-height: 150px;
+            border-radius: 10px;
+            transition: all 0.25s;
+            opacity: 0.6;
         }
+        .add-pdf-card:hover { opacity: 1; border-color: var(--accent-primary); box-shadow: var(--glow); }
+        .add-pdf-card .plus { font-size: 2.2em; color: var(--accent-primary); margin-bottom: 8px; text-shadow: var(--glow-strong); }
+        .add-pdf-card .label { font-size: 0.85em; color: var(--accent-primary); font-weight: 600; font-family: 'Share Tech Mono', monospace; }
+        .add-pdf-card .sublabel { font-size: 0.72em; color: var(--text-dim); margin-top: 4px; font-family: 'Share Tech Mono', monospace; }
 
-        /* Loading Spinner */
-        .loading {
-            text-align: center;
-            padding: 60px 20px;
+        .add-folder-card {
+            border: 2px dashed var(--accent-dim);
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            min-height: 150px;
+            border-radius: 10px;
+            transition: all 0.25s;
+            opacity: 0.6;
         }
+        .add-folder-card:hover { opacity: 1; border-color: var(--accent-secondary); box-shadow: 0 0 10px rgba(0,204,51,0.3); }
+        .add-folder-card .plus { font-size: 2.2em; color: var(--accent-secondary); margin-bottom: 8px; }
+        .add-folder-card .label { font-size: 0.85em; color: var(--accent-secondary); font-weight: 600; font-family: 'Share Tech Mono', monospace; }
+        .add-folder-card .sublabel { font-size: 0.72em; color: var(--text-dim); margin-top: 4px; font-family: 'Share Tech Mono', monospace; }
+
+        /* ── LOADING ── */
+        .loading { text-align: center; padding: 60px 20px; }
 
         .spinner {
-            border: 4px solid var(--border-color);
-            border-top: 4px solid var(--accent-primary);
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--accent-primary);
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
+            width: 44px; height: 44px;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+            box-shadow: var(--glow);
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Toast Notifications */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--bg-card);
-            padding: 15px 25px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-            z-index: 1000;
-            animation: slideIn 0.3s ease;
-            max-width: 350px;
-        }
+        .loading p { font-family: 'Share Tech Mono', monospace; color: var(--text-secondary); font-size: 0.88em; letter-spacing: 2px; }
 
-        .toast.success {
-            border-left: 4px solid var(--accent-success);
-        }
+        /* ── EMPTY STATE ── */
+        .empty-state { text-align: center; padding: 60px 20px; }
+        .empty-icon { font-size: 4em; opacity: 0.2; margin-bottom: 16px; }
+        .empty-state h3 { color: var(--text-dim); margin-bottom: 8px; font-family: 'Share Tech Mono', monospace; font-weight: 400; letter-spacing: 1px; }
+        .empty-state p { color: var(--text-dim); font-size: 0.85em; font-family: 'Share Tech Mono', monospace; }
 
-        .toast.error {
-            border-left: 4px solid var(--accent-danger);
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        /* Modal */
+        /* ── MODAL ── */
         .modal {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
             z-index: 999;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(4px);
         }
-
-        .modal.active {
-            display: flex;
-        }
+        .modal.active { display: flex; }
 
         .modal-content {
             background: var(--bg-card);
-            padding: 30px;
-            border-radius: 20px;
+            padding: 28px;
+            border-radius: 12px;
             border: 1px solid var(--border-color);
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            border-top: 2px solid var(--accent-primary);
+            max-width: 460px; width: 90%;
+            box-shadow: var(--glow), 0 20px 60px rgba(0,0,0,0.7);
         }
 
         .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
             margin-bottom: 20px;
         }
 
         .modal-header h3 {
             color: var(--accent-primary);
+            font-family: 'Share Tech Mono', monospace;
+            font-weight: 400;
+            letter-spacing: 1px;
+            font-size: 1.05em;
         }
 
         .close-modal {
-            background: none;
-            border: none;
-            font-size: 1.5em;
-            cursor: pointer;
-            color: var(--text-secondary);
-            padding: 0;
-            width: 30px;
-            height: 30px;
+            background: none; border: none;
+            font-size: 1.4em; cursor: pointer;
+            color: var(--text-dim); padding: 0;
+            width: 28px; height: 28px;
+            transition: color 0.2s;
         }
+        .close-modal:hover { color: var(--accent-danger); }
 
-        .close-modal:hover {
-            color: var(--text-primary);
-        }
+        .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+        .modal-actions button { flex: 1; }
 
-        .modal-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .modal-actions button {
-            flex: 1;
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 80px 20px;
-        }
-
-        .empty-icon {
-            font-size: 5em;
-            opacity: 0.3;
-            margin-bottom: 20px;
-        }
-
-        .empty-state h3 {
-            color: var(--text-secondary);
-            margin-bottom: 10px;
-        }
-
-        .empty-state p {
-            color: var(--text-secondary);
-            font-size: 0.9em;
-        }
-
-        .owner-toggle {
-            background: var(--bg-card);
-            padding: 15px 20px;
-            border-radius: 12px;
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 11px 14px;
+            background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .owner-badge {
-            background: linear-gradient(135deg, var(--accent-success), #059669);
-            padding: 4px 12px;
             border-radius: 8px;
-            font-size: 0.8em;
-            font-weight: 600;
-            font-family: 'Fira Code', monospace;
+            color: var(--text-primary);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.95em;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        input:focus {
+            outline: none;
+            border-color: var(--accent-dim);
+            box-shadow: 0 0 0 2px rgba(0,255,65,0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--text-dim);
+            font-size: 0.82em;
+            font-family: 'Share Tech Mono', monospace;
+            letter-spacing: 1px;
+        }
+        .input-group { margin-bottom: 16px; }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed; bottom: 28px; right: 28px;
+            background: var(--bg-card2);
+            padding: 13px 22px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+            max-width: 340px;
+            font-size: 0.88em;
+            font-family: 'Share Tech Mono', monospace;
+        }
+        .toast.success { border-left: 3px solid var(--accent-primary); color: var(--accent-primary); }
+        .toast.error { border-left: 3px solid var(--accent-danger); color: var(--accent-danger); }
+
+        @keyframes slideIn {
+            from { transform: translateX(380px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
-        /* Responsive */
+        /* ── OWNER BADGE ── */
+        .owner-badge {
+            background: rgba(0,255,65,0.1);
+            border: 1px solid var(--accent-dim);
+            color: var(--accent-primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.78em;
+            letter-spacing: 1px;
+            box-shadow: var(--glow);
+            animation: pulse 2s infinite;
+        }
+
+        /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 1.8em;
-            }
-
-            .header-content {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .file-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .folder-input-group {
-                grid-template-columns: 1fr;
-            }
+            h1 { font-size: 1.4em; }
+            .file-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 480px) {
+            .file-grid { grid-template-columns: 1fr; }
         }
 
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="header-content">
+<div class="container">
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <div class="logo-area">
+                <span class="logo-icon">💾</span>
                 <div>
-                    <h1>📚 CODETANTRA ANSWER KEYS</h1>
-                    <div class="subtitle">ANSWER FOR ALL QUESTION</div>
+                    <h1>CODETANTRA ANSWER KEYS</h1>
+                    <div class="subtitle">> ANSWER FOR ALL QUESTION_</div>
                 </div>
-                </div>
-        </header>
-
-        <!-- Hidden file input for uploads -->
-        <input type="file" id="pdfUpload" accept=".pdf" multiple onchange="handleFileSelect(event)" style="display:none;">
-
-        <!-- Breadcrumb -->
-        <div class="breadcrumb" id="breadcrumb">
-            <span class="breadcrumb-item active" onclick="navigateTo([])">🏠 Home</span>
+            </div>
+            <div class="header-badge">
+                <div class="status-dot"></div>
+                <span class="status-text">SYSTEM ONLINE</span>
+                <span id="ownerBadge" class="owner-badge hidden">✦ EDIT MODE</span>
+            </div>
         </div>
+    </header>
 
-        <!-- Loading State -->
-        <div id="loadingState" class="loading">
-            <div class="spinner"></div>
-            <p>Loading documents...</p>
-        </div>
+    <!-- HIDDEN FILE INPUT -->
+    <input type="file" id="pdfUpload" accept=".pdf" multiple onchange="handleFileSelect(event)" style="display:none;">
 
-        <!-- File Grid -->
-        <div id="fileGrid" class="file-grid hidden"></div>
-
-        <!-- Empty State -->
-        <div id="emptyState" class="empty-state hidden">
-            <div class="empty-icon">📭</div>
-            <h3>No documents here</h3>
-            <p>This folder is empty</p>
+    <!-- EDIT MODE BAR -->
+    <div id="editBar">
+        <span class="edit-bar-label">▶ EDIT MODE ACTIVE — <span id="editDestLabel" style="color:var(--text-secondary);">navigating root</span></span>
+        <div class="edit-bar-actions">
+            <button class="btn-primary btn-small" onclick="triggerUploadHere()">⬆ Upload PDF Here</button>
+            <button class="btn-secondary btn-small" onclick="promptNewFolder()">📁 New Folder Here</button>
         </div>
     </div>
 
-
-    <!-- Delete Confirmation Modal -->
-    <div id="deleteModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>⚠️ Confirm Delete</h3>
-                <button class="close-modal" onclick="closeDeleteModal()">×</button>
-            </div>
-            <p>Are you sure you want to delete this item? This action cannot be undone.</p>
-            <div class="modal-actions">
-                <button class="btn-secondary" onclick="closeDeleteModal()">Cancel</button>
-                <button class="btn-danger" onclick="confirmDelete()">Delete</button>
-            </div>
-        </div>
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb" id="breadcrumb">
+        <span class="breadcrumb-item active" onclick="navigateTo([])">⌂ ROOT</span>
     </div>
 
-    <!-- Supabase SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- LOADING -->
+    <div id="loadingState" class="loading">
+        <div class="spinner"></div>
+        <p>LOADING DOCUMENTS...</p>
+    </div>
 
-    <script>
-        // ========== CONFIGURATION ==========
-        const SUPABASE_URL = 'https://zzgqpgdfanyviabhzypk.supabase.co/';
-        const SUPABASE_ANON_KEY = 'sb_publishable_R_qrpmmg_Sww2MT1fE4TLw_Hoksy20R';
+    <!-- FILE GRID -->
+    <div id="fileGrid" class="file-grid hidden"></div>
 
-        // Initialize Supabase
-        const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    <!-- EMPTY STATE -->
+    <div id="emptyState" class="empty-state hidden">
+        <div class="empty-icon">📭</div>
+        <h3>// EMPTY DIRECTORY</h3>
+        <p>no files found in this path</p>
+    </div>
 
-        // ========== STATE ==========
-        let isOwner = false;
-        let currentPath = [];
-        let uploadTargetPath = []; // separate from browse path
-        let selectedFiles = [];
-        let itemToDelete = null;
+</div>
 
-        // ========== INITIALIZATION ==========
-        const SECRET_EDIT_KEY = 'dharani';
+<!-- DELETE MODAL -->
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>⚠ CONFIRM DELETE</h3>
+            <button class="close-modal" onclick="closeDeleteModal()">×</button>
+        </div>
+        <p style="color:var(--text-secondary);font-size:0.9em;font-family:'Share Tech Mono',monospace;">This action cannot be undone. Permanently delete <strong id="deleteItemName" style="color:var(--accent-danger);"></strong>?</p>
+        <div class="modal-actions">
+            <button class="btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+            <button class="btn-danger" onclick="confirmDelete()">Delete</button>
+        </div>
+    </div>
+</div>
 
-        function init() {
-            // Check secret URL param INSIDE init so DOM is fully ready
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('edit') === SECRET_EDIT_KEY) {
-                isOwner = true;
-                // Wipe the param from URL bar so no one sees it
-                history.replaceState({}, document.title, window.location.pathname);
-            }
+<!-- RENAME MODAL -->
+<div id="renameModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>✎ RENAME</h3>
+            <button class="close-modal" onclick="closeRenameModal()">×</button>
+        </div>
+        <div class="input-group">
+            <label>NEW NAME</label>
+            <input type="text" id="renameInput" placeholder="Enter new name" onkeydown="if(event.key==='Enter') confirmRename()">
+        </div>
+        <div class="modal-actions">
+            <button class="btn-secondary" onclick="closeRenameModal()">Cancel</button>
+            <button class="btn-primary" onclick="confirmRename()">Rename</button>
+        </div>
+    </div>
+</div>
 
-            if (isOwner) {
-                showToast('✏️ Edit mode active — navigate into a folder and click Add PDF', 'success');
-            }
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    // ── CONFIG ──
+    const SUPABASE_URL = 'https://zzgqpgdfanyviabhzypk.supabase.co/';
+    const SUPABASE_ANON_KEY = 'sb_publishable_R_qrpmmg_Sww2MT1fE4TLw_Hoksy20R';
+    const SECRET_EDIT_KEY = 'dharani';
+    const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-            loadFiles();
+    // ── STATE ──
+    let isOwner = false;
+    let currentPath = [];
+    let uploadTargetPath = [];
+    let selectedFiles = [];
+    let itemToDelete = null;
+    let itemToRename = null;
+
+    // ── INIT ──
+    function init() {
+        const p = new URLSearchParams(window.location.search);
+        if (p.get('edit') === SECRET_EDIT_KEY) {
+            isOwner = true;
+            history.replaceState({}, document.title, window.location.pathname);
         }
-
-
-        // ========== FILE OPERATIONS ==========
-        async function loadFiles() {
-            document.getElementById('loadingState').classList.remove('hidden');
-            document.getElementById('fileGrid').classList.add('hidden');
-            document.getElementById('emptyState').classList.add('hidden');
-
-            try {
-                const folderPath = currentPath.length > 0 ? currentPath.join('/') + '/' : '';
-                
-                const { data, error } = await db.storage
-                    .from('pdfs')
-                    .list(folderPath, {
-                        limit: 100,
-                        offset: 0,
-                        sortBy: { column: 'name', order: 'asc' }
-                    });
-
-                if (error) throw error;
-
-                document.getElementById('loadingState').classList.add('hidden');
-
-                if (data.length === 0) {
-                    document.getElementById('emptyState').classList.remove('hidden');
-                } else {
-                    renderFiles(data);
-                    document.getElementById('fileGrid').classList.remove('hidden');
-                }
-            } catch (error) {
-                console.error('Error loading files:', error);
-                showToast('Error loading files: ' + error.message, 'error');
-                document.getElementById('loadingState').classList.add('hidden');
-                document.getElementById('emptyState').classList.remove('hidden');
-            }
+        if (isOwner) {
+            document.getElementById('ownerBadge').classList.remove('hidden');
+            document.getElementById('editBar').classList.add('active');
+            updateEditBarLabel();
         }
+        loadFiles();
+    }
 
-        function renderFiles(items) {
-            const grid = document.getElementById('fileGrid');
-            grid.innerHTML = '';
+    function updateEditBarLabel() {
+        const label = currentPath.length > 0 ? currentPath.join(' / ') : 'root';
+        document.getElementById('editDestLabel').textContent = label;
+        uploadTargetPath = [...currentPath];
+    }
 
-            // Filter out .keep placeholder files
-            items = items.filter(item => item.name !== '.keep');
+    // ── LOAD FILES ──
+    async function loadFiles() {
+        document.getElementById('loadingState').classList.remove('hidden');
+        document.getElementById('fileGrid').classList.add('hidden');
+        document.getElementById('emptyState').classList.add('hidden');
 
-            if (items.length === 0) {
-                document.getElementById('fileGrid').classList.add('hidden');
-                document.getElementById('emptyState').classList.remove('hidden');
-                return;
-            }
-
-            // If in edit mode, add a "+ Add PDF here" card at the end
-            items.forEach(item => {
-                const card = document.createElement('div');
-
-                if (item.id === null) {
-                    // Folder card
-                    card.className = 'folder-card';
-                    card.innerHTML = `
-                        <span class="folder-icon">📁</span>
-                        <div class="folder-name">${item.name}</div>
-                        <div class="file-meta">Folder</div>
-                        ${isOwner ? `
-                            <div class="file-actions" style="flex-wrap:wrap;gap:6px;">
-                                <button class="btn-primary btn-small" style="flex:1;min-width:90px;" onclick="event.stopPropagation(); enterFolderForUpload('${item.name}')">➕ Add PDF</button>
-                                <button class="btn-secondary btn-small" style="flex:1;min-width:90px;" onclick="event.stopPropagation(); enterFolderForSubfolder('${item.name}')">📁 Add Folder</button>
-                                <button class="btn-danger btn-small" style="width:100%;" onclick="event.stopPropagation(); deleteItem('${item.name}', true)">🗑 Delete Folder</button>
-                            </div>
-                        ` : ''}
-                    `;
-                    card.onclick = () => navigateToFolder(item.name);
-                } else {
-                    // File card
-                    card.className = 'file-card';
-                    const fileSize = formatFileSize(item.metadata?.size || 0);
-                    const fileName = item.name;
-                    card.innerHTML = `
-                        <span class="file-icon">📄</span>
-                        <div class="file-name">${fileName}</div>
-                        <div class="file-meta">${fileSize}</div>
-                        <div class="file-actions">
-                            <button class="btn-primary btn-small" onclick="event.stopPropagation(); viewPDF('${fileName}')">👁 View PDF</button>
-                            ${isOwner ? `
-                                <button class="btn-danger btn-small" onclick="event.stopPropagation(); deleteItem('${fileName}', false)">🗑 Delete</button>
-                            ` : ''}
-                        </div>
-                    `;
-                }
-
-                grid.appendChild(card);
+        try {
+            const folderPath = currentPath.length > 0 ? currentPath.join('/') + '/' : '';
+            const { data, error } = await db.storage.from('pdfs').list(folderPath, {
+                limit: 200, offset: 0, sortBy: { column: 'name', order: 'asc' }
             });
+            if (error) throw error;
 
-            // In edit mode, always show an "+ Upload PDF here" card at the end
-            if (isOwner) {
-                const addCard = document.createElement('div');
-                addCard.className = 'file-card';
-                addCard.style.cssText = 'border:2px dashed var(--accent-primary);background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;min-height:160px;opacity:0.75;transition:opacity 0.2s;';
-                addCard.onmouseenter = () => addCard.style.opacity = '1';
-                addCard.onmouseleave = () => addCard.style.opacity = '0.75';
-                addCard.innerHTML = `<div style="font-size:2.5em;margin-bottom:10px;">➕</div><div style="font-weight:600;color:var(--accent-primary);">Upload PDF here</div><div style="font-size:0.82em;color:var(--text-secondary);margin-top:4px;">Click to select files</div>`;
-                addCard.onclick = () => {
-                    updateUploadDest(currentPath);
-                    document.getElementById('pdfUpload').click();
-                        };
-                grid.appendChild(addCard);
-            }
-        }
+            document.getElementById('loadingState').classList.add('hidden');
+            const filtered = data.filter(i => i.name !== '.keep');
 
-        function navigateToFolder(folderName) {
-            currentPath.push(folderName);
-            if (isOwner) updateUploadDest(currentPath);
-            updateBreadcrumb();
-            loadFiles();
-        }
-
-        function navigateTo(path) {
-            currentPath = path;
-            if (isOwner) updateUploadDest(currentPath);
-            updateBreadcrumb();
-            loadFiles();
-        }
-
-        function updateBreadcrumb() {
-            const breadcrumb = document.getElementById('breadcrumb');
-            let html = '<span class="breadcrumb-item" onclick="navigateTo([])">🏠 Home</span>';
-            
-            currentPath.forEach((folder, index) => {
-                const path = currentPath.slice(0, index + 1);
-                html += `
-                    <span class="breadcrumb-separator">/</span>
-                    <span class="breadcrumb-item ${index === currentPath.length - 1 ? 'active' : ''}" 
-                          onclick='navigateTo(${JSON.stringify(path)})'>${folder}</span>
-                `;
-            });
-            
-            breadcrumb.innerHTML = html;
-        }
-
-        function viewPDF(fileName) {
-            const filePath = currentPath.length > 0 
-                ? currentPath.join('/') + '/' + fileName 
-                : fileName;
-            
-            // Use public URL directly - no signing needed for public bucket
-            const { data } = db.storage
-                .from('pdfs')
-                .getPublicUrl(filePath);
-
-            window.open(data.publicUrl, '_blank');
-        }
-
-        // ========== UPLOAD OPERATIONS ==========
-        function handleFileSelect(event) {
-            selectedFiles = Array.from(event.target.files);
-            if (selectedFiles.length > 0) {
-                const names = selectedFiles.map(f => f.name).join(', ');
-                showToast(`📎 ${selectedFiles.length} file(s) selected`, 'success');
-            }
-        }
-
-        function handleDragOver(event) {
-            event.preventDefault();
-            event.currentTarget.classList.add('dragover');
-        }
-
-        function handleDragLeave(event) {
-            event.currentTarget.classList.remove('dragover');
-        }
-
-        function handleDrop(event) {
-            event.preventDefault();
-            event.currentTarget.classList.remove('dragover');
-            
-            const files = Array.from(event.dataTransfer.files).filter(f => f.type === 'application/pdf');
-            if (files.length > 0) {
-                selectedFiles = files;
-                showToast(`${files.length} PDF(s) ready to upload`, 'success');
+            if (filtered.length === 0 && !isOwner) {
+                document.getElementById('emptyState').classList.remove('hidden');
             } else {
-                showToast('Please drop PDF files only', 'error');
+                renderFiles(filtered);
+                document.getElementById('fileGrid').classList.remove('hidden');
             }
+        } catch (error) {
+            document.getElementById('loadingState').innerHTML = `
+                <div style="background:var(--bg-card);border:1px solid rgba(255,51,51,0.4);border-left:3px solid var(--accent-danger);border-radius:10px;padding:24px;max-width:480px;margin:0 auto;text-align:left;">
+                    <div style="font-size:1.5em;margin-bottom:8px;color:var(--accent-danger);">⚠ CONNECTION ERROR</div>
+                    <p style="color:var(--accent-danger);font-family:'Share Tech Mono',monospace;font-size:0.85em;margin-bottom:12px;">${error.message}</p>
+                    <p style="color:var(--text-dim);font-size:0.82em;font-family:'Share Tech Mono',monospace;">Check Supabase URL/key and bucket policies.</p>
+                    <button onclick="location.reload()" style="margin-top:14px;padding:8px 18px;background:rgba(255,51,51,0.1);color:var(--accent-danger);border:1px solid rgba(255,51,51,0.3);border-radius:6px;cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:0.82em;">↺ RETRY</button>
+                </div>`;
         }
+    }
 
-        async function uploadPDFs() {
-            if (!isOwner) {
-                showToast('Edit mode not active. Use the edit URL.', 'error');
-                return;
-            }
-            if (selectedFiles.length === 0) {
-                showToast('Please select files to upload', 'error');
-                return;
-            }
-            if (uploadTargetPath.length === 0) {
-                showToast('Please navigate into a folder first, or click "Add PDF" on a folder card', 'error');
-                return;
-            }
+    // ── RENDER ──
+    function renderFiles(items) {
+        const grid = document.getElementById('fileGrid');
+        grid.innerHTML = '';
 
-            const folderPath = uploadTargetPath.join('/');
+        items.forEach(item => {
+            const card = document.createElement('div');
+            if (item.id === null) {
+                // FOLDER
+                card.className = 'folder-card';
+                card.innerHTML = `
+                    <span class="folder-icon">📁</span>
+                    <div class="folder-name">${item.name}</div>
+                    <div class="file-meta">FOLDER</div>
+                    ${isOwner ? `
+                    <div class="file-actions">
+                        <button class="btn-primary btn-small" onclick="event.stopPropagation();enterFolderForUpload('${item.name}')">⬆ PDF</button>
+                        <button class="btn-secondary btn-small" onclick="event.stopPropagation();enterFolderForSubfolder('${item.name}')">📁+</button>
+                        <button class="btn-warn btn-small" onclick="event.stopPropagation();openRename('${item.name}',true)">✎</button>
+                        <button class="btn-danger btn-small" onclick="event.stopPropagation();deleteItem('${item.name}',true)">🗑</button>
+                    </div>` : ''}
+                `;
+                card.onclick = () => navigateToFolder(item.name);
+            } else {
+                // FILE
+                card.className = 'file-card';
+                const size = formatFileSize(item.metadata?.size || 0);
+                card.innerHTML = `
+                    <span class="file-icon">📄</span>
+                    <div class="file-name">${item.name}</div>
+                    <div class="file-meta">${size}</div>
+                    <div class="file-actions">
+                        <button class="btn-primary btn-small" onclick="event.stopPropagation();viewPDF('${item.name}')">▶ VIEW</button>
+                        ${isOwner ? `
+                        <button class="btn-warn btn-small" onclick="event.stopPropagation();openRename('${item.name}',false)">✎</button>
+                        <button class="btn-danger btn-small" onclick="event.stopPropagation();deleteItem('${item.name}',false)">🗑</button>` : ''}
+                    </div>
+                `;
+            }
+            grid.appendChild(card);
+        });
 
-            try {
-                for (const file of selectedFiles) {
-                    const filePath = `${folderPath}/${file.name}`;
-                    const { error } = await db.storage.from('pdfs').upload(filePath, file, { cacheControl: '3600', upsert: true });
-                    if (error) throw error;
+        // Edit mode: add "Upload PDF here" + "New Folder here" cards
+        if (isOwner) {
+            const addPDF = document.createElement('div');
+            addPDF.className = 'add-pdf-card';
+            addPDF.innerHTML = `<div class="plus">⬆</div><div class="label">UPLOAD PDF HERE</div><div class="sublabel">click to select files</div>`;
+            addPDF.onclick = () => triggerUploadHere();
+            grid.appendChild(addPDF);
+
+            const addFolder = document.createElement('div');
+            addFolder.className = 'add-folder-card';
+            addFolder.innerHTML = `<div class="plus">📁</div><div class="label">NEW FOLDER HERE</div><div class="sublabel">click to create</div>`;
+            addFolder.onclick = () => promptNewFolder();
+            grid.appendChild(addFolder);
+        }
+    }
+
+    // ── NAVIGATION ──
+    function navigateToFolder(name) {
+        currentPath.push(name);
+        if (isOwner) updateEditBarLabel();
+        updateBreadcrumb();
+        loadFiles();
+    }
+
+    function navigateTo(path) {
+        currentPath = path;
+        if (isOwner) updateEditBarLabel();
+        updateBreadcrumb();
+        loadFiles();
+    }
+
+    function updateBreadcrumb() {
+        const bc = document.getElementById('breadcrumb');
+        let html = `<span class="breadcrumb-item" onclick="navigateTo([])">⌂ ROOT</span>`;
+        currentPath.forEach((f, i) => {
+            const p = currentPath.slice(0, i + 1);
+            html += `<span class="breadcrumb-separator">/</span>
+                     <span class="breadcrumb-item ${i === currentPath.length-1 ? 'active' : ''}"
+                           onclick='navigateTo(${JSON.stringify(p)})'>${f}</span>`;
+        });
+        bc.innerHTML = html;
+    }
+
+    // ── VIEW PDF ──
+    function viewPDF(fileName) {
+        const filePath = currentPath.length > 0 ? currentPath.join('/') + '/' + fileName : fileName;
+        const { data } = db.storage.from('pdfs').getPublicUrl(filePath);
+        window.open(data.publicUrl, '_blank');
+    }
+
+    // ── UPLOAD ──
+    function triggerUploadHere() {
+        uploadTargetPath = [...currentPath];
+        updateEditBarLabel();
+        document.getElementById('pdfUpload').click();
+    }
+
+    function enterFolderForUpload(folderName) {
+        uploadTargetPath = [...currentPath, folderName];
+        document.getElementById('pdfUpload').click();
+    }
+
+    function enterFolderForSubfolder(folderName) {
+        uploadTargetPath = [...currentPath, folderName];
+        promptNewFolder();
+    }
+
+    function handleFileSelect(event) {
+        selectedFiles = Array.from(event.target.files);
+        if (selectedFiles.length > 0) uploadPDFs();
+    }
+
+    function handleDragOver(e) { e.preventDefault(); e.currentTarget.classList.add('dragover'); }
+    function handleDragLeave(e) { e.currentTarget.classList.remove('dragover'); }
+    function handleDrop(e) {
+        e.preventDefault(); e.currentTarget.classList.remove('dragover');
+        const files = Array.from(e.dataTransfer.files).filter(f => f.type === 'application/pdf');
+        if (files.length > 0) { selectedFiles = files; uploadPDFs(); }
+        else showToast('PDF files only', 'error');
+    }
+
+    async function uploadPDFs() {
+        if (!isOwner) { showToast('Edit mode not active', 'error'); return; }
+        if (selectedFiles.length === 0) { showToast('No files selected', 'error'); return; }
+        if (uploadTargetPath.length === 0) { showToast('Navigate into a folder first or click ⬆ PDF on a folder', 'error'); return; }
+
+        showToast(`Uploading ${selectedFiles.length} file(s)...`, 'success');
+        const folderPath = uploadTargetPath.join('/');
+        try {
+            for (const file of selectedFiles) {
+                const { error } = await db.storage.from('pdfs').upload(`${folderPath}/${file.name}`, file, { cacheControl: '3600', upsert: true });
+                if (error) throw error;
+            }
+            showToast(`✅ ${selectedFiles.length} file(s) uploaded!`, 'success');
+            selectedFiles = [];
+            document.getElementById('pdfUpload').value = '';
+            currentPath = [...uploadTargetPath];
+            updateBreadcrumb();
+            if (isOwner) updateEditBarLabel();
+            loadFiles();
+        } catch (e) { showToast('Upload error: ' + e.message, 'error'); }
+    }
+
+    // ── NEW FOLDER ──
+    function promptNewFolder() {
+        const name = prompt(`New folder name inside "${currentPath.length > 0 ? currentPath.join('/') : 'ROOT'}":`);
+        if (name && name.trim()) createFolderWithName(name.trim());
+    }
+
+    async function createFolderWithName(name) {
+        const base = uploadTargetPath.length > 0 ? uploadTargetPath.join('/') + '/' : (currentPath.length > 0 ? currentPath.join('/') + '/' : '');
+        const path = `${base}${name}/.keep`;
+        try {
+            const { error } = await db.storage.from('pdfs').upload(path, new Blob([''], { type: 'text/plain' }), { cacheControl: '3600', upsert: false });
+            if (error && !error.message.includes('already exists')) throw error;
+            showToast(`📁 "${name}" created!`, 'success');
+            loadFiles();
+        } catch (e) { showToast('Error: ' + e.message, 'error'); }
+    }
+
+    // ── DELETE ──
+    function deleteItem(name, isFolder) {
+        itemToDelete = { name, isFolder };
+        document.getElementById('deleteItemName').textContent = name;
+        document.getElementById('deleteModal').classList.add('active');
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.remove('active');
+        itemToDelete = null;
+    }
+
+    async function confirmDelete() {
+        if (!itemToDelete) return;
+        const filePath = currentPath.length > 0 ? currentPath.join('/') + '/' + itemToDelete.name : itemToDelete.name;
+        try {
+            if (itemToDelete.isFolder) {
+                // recursively delete all files in folder
+                const { data: files } = await db.storage.from('pdfs').list(filePath);
+                if (files && files.length > 0) {
+                    await db.storage.from('pdfs').remove(files.map(f => `${filePath}/${f.name}`));
                 }
-                showToast(`✅ ${selectedFiles.length} file(s) uploaded!`, 'success');
-                selectedFiles = [];
-                document.getElementById('pdfUpload').value = '';
-
-                // Navigate to where we just uploaded
-                currentPath = [...uploadTargetPath];
-                updateBreadcrumb();
-                loadFiles();
-            } catch (error) {
-                showToast('Upload error: ' + error.message, 'error');
+            } else {
+                const { error } = await db.storage.from('pdfs').remove([filePath]);
+                if (error) throw error;
             }
-        }
+            showToast('Deleted!', 'success');
+            closeDeleteModal();
+            loadFiles();
+        } catch (e) { showToast('Delete error: ' + e.message, 'error'); closeDeleteModal(); }
+    }
 
-        function showInlineFolderInput() {
-            const name = prompt('New folder name:');
-            if (name && name.trim()) {
-                createFolderWithName(name.trim());
-            }
-        }
+    // ── RENAME ──
+    function openRename(name, isFolder) {
+        itemToRename = { name, isFolder };
+        document.getElementById('renameInput').value = isFolder ? name : name.replace(/\.pdf$/i, '');
+        document.getElementById('renameModal').classList.add('active');
+        setTimeout(() => document.getElementById('renameInput').select(), 100);
+    }
 
-        async function createFolderWithName(name) {
-            const basePath = uploadTargetPath.length > 0 ? uploadTargetPath.join('/') + '/' : '';
-            const folderPath = `${basePath}${name}/.keep`;
-            try {
-                const { error } = await db.storage.from('pdfs').upload(folderPath, new Blob([''], { type: 'text/plain' }), { cacheControl: '3600', upsert: false });
-                if (error && !error.message.includes('already exists')) throw error;
-                showToast(`📁 "${name}" created!`, 'success');
-                loadFiles();
-            } catch (error) {
-                showToast('Error: ' + error.message, 'error');
-            }
-        }
+    function closeRenameModal() {
+        document.getElementById('renameModal').classList.remove('active');
+        itemToRename = null;
+    }
 
-        function updateUploadDest(path) {
-            uploadTargetPath = [...path];
-        }
+    async function confirmRename() {
+        if (!itemToRename) return;
+        let newName = document.getElementById('renameInput').value.trim();
+        if (!newName) { showToast('Enter a name', 'error'); return; }
 
-        function enterFolderForUpload(folderName) {
-            const path = [...currentPath, folderName];
-            updateUploadDest(path);
-            document.getElementById('pdfUpload').click();
-        }
+        const oldName = itemToRename.name;
+        const isFolder = itemToRename.isFolder;
 
-        function enterFolderForSubfolder(folderName) {
-            const path = [...currentPath, folderName];
-            updateUploadDest(path);
-            showInlineFolderInput();
-        }
+        // Add .pdf if it's a file and missing extension
+        if (!isFolder && !newName.toLowerCase().endsWith('.pdf')) newName += '.pdf';
 
-        async function createFolder() {
-            // Legacy — now handled by createFolderInline
-            showInlineFolderInput();
-        }
+        const base = currentPath.length > 0 ? currentPath.join('/') + '/' : '';
+        const oldPath = base + oldName;
+        const newPath = base + newName;
 
-        // ========== DELETE OPERATIONS ==========
-        function deleteItem(name, isFolder) {
-            if (!isOwner) {
-                showToast('Edit mode not active. Use the edit URL.', 'error');
-                return;
-            }
-
-            itemToDelete = { name, isFolder };
-            document.getElementById('deleteModal').classList.add('active');
-        }
-
-        function closeDeleteModal() {
-            document.getElementById('deleteModal').classList.remove('active');
-            itemToDelete = null;
-        }
-
-        async function confirmDelete() {
-            if (!itemToDelete) return;
-
-            const filePath = currentPath.length > 0 
-                ? currentPath.join('/') + '/' + itemToDelete.name
-                : itemToDelete.name;
-
-            try {
-                if (itemToDelete.isFolder) {
-                    const { data: files, error: listError } = await db.storage
-                        .from('pdfs')
-                        .list(filePath);
-
-                    if (listError) throw listError;
-
-                    const filesToDelete = files.map(f => `${filePath}/${f.name}`);
-                    
-                    if (filesToDelete.length > 0) {
-                        const { error: deleteError } = await db.storage
-                            .from('pdfs')
-                            .remove(filesToDelete);
-
-                        if (deleteError) throw deleteError;
+        try {
+            if (isFolder) {
+                // Rename folder: copy all files then delete originals
+                const { data: files } = await db.storage.from('pdfs').list(oldPath);
+                if (files && files.length > 0) {
+                    for (const f of files) {
+                        const { data: dlData } = await db.storage.from('pdfs').download(`${oldPath}/${f.name}`);
+                        await db.storage.from('pdfs').upload(`${newPath}/${f.name}`, dlData, { upsert: true });
                     }
+                    await db.storage.from('pdfs').remove(files.map(f => `${oldPath}/${f.name}`));
                 } else {
-                    const { error } = await db.storage
-                        .from('pdfs')
-                        .remove([filePath]);
-
-                    if (error) throw error;
+                    // Empty folder - just create new keep
+                    await db.storage.from('pdfs').upload(`${newPath}/.keep`, new Blob([''], { type: 'text/plain' }), { upsert: false });
                 }
-
-                showToast('Deleted successfully!', 'success');
-                closeDeleteModal();
-                loadFiles();
-            } catch (error) {
-                showToast('Delete error: ' + error.message, 'error');
-                closeDeleteModal();
+            } else {
+                // Rename file: copy then delete
+                const { data: fileData, error: dlErr } = await db.storage.from('pdfs').download(oldPath);
+                if (dlErr) throw dlErr;
+                const { error: upErr } = await db.storage.from('pdfs').upload(newPath, fileData, { cacheControl: '3600', upsert: true });
+                if (upErr) throw upErr;
+                const { error: rmErr } = await db.storage.from('pdfs').remove([oldPath]);
+                if (rmErr) throw rmErr;
             }
-        }
+            showToast(`✅ Renamed to "${newName}"`, 'success');
+            closeRenameModal();
+            loadFiles();
+        } catch (e) { showToast('Rename error: ' + e.message, 'error'); }
+    }
 
-        // ========== UTILITIES ==========
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 B';
-            const k = 1024;
-            const sizes = ['B', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
-        }
+    // ── UTILS ──
+    function formatFileSize(bytes) {
+        if (!bytes) return '0 B';
+        const k = 1024, s = ['B','KB','MB','GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return (bytes / Math.pow(k, i)).toFixed(1) + ' ' + s[i];
+    }
 
-        function showToast(message, type = 'success') {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.textContent = message;
-            document.body.appendChild(toast);
+    function showToast(msg, type = 'success') {
+        const t = document.createElement('div');
+        t.className = `toast ${type}`;
+        t.textContent = msg;
+        document.body.appendChild(t);
+        setTimeout(() => { t.style.animation = 'slideIn 0.3s ease reverse'; setTimeout(() => t.remove(), 300); }, 3000);
+    }
 
-            setTimeout(() => {
-                toast.style.animation = 'slideIn 0.3s ease reverse';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
-
-        // Initialize
-        init();
-    </script>
+    init();
+</script>
 </body>
 </html>
