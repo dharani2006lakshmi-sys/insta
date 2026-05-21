@@ -256,10 +256,9 @@
 
         /* ── FILE GRID ── */
         .file-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 16px;
-            margin-top: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
         .file-card, .folder-card {
@@ -676,12 +675,22 @@
     function renderFiles(items) {
         const grid = document.getElementById('fileGrid');
         grid.innerHTML = '';
-
-        items.forEach(item => {
+    
+        items.forEach((item, index) => {
             const card = document.createElement('div');
+    
             if (item.id === null) {
-                // FOLDER
+                // 📁 FOLDER
                 card.className = 'folder-card';
+    
+                /* 🔥 AUTO POSITION SYSTEM */
+                if (item.name.startsWith("SEM-")) {
+                    const num = parseInt(item.name.split("-")[1]);
+                    card.style.order = num;  // SEM-1 → 1, SEM-2 → 2
+                } else {
+                    card.style.order = 100 + index; // other folders later
+                }
+    
                 card.innerHTML = `
                     <span class="folder-icon">📁</span>
                     <div class="folder-name">${item.name}</div>
@@ -694,11 +703,16 @@
                         <button class="btn-danger btn-small" onclick="event.stopPropagation();deleteItem('${item.name}',true)">🗑</button>
                     </div>` : ''}
                 `;
+    
                 card.onclick = () => navigateToFolder(item.name);
+    
             } else {
-                // FILE
+                // 📄 FILE
                 card.className = 'file-card';
+                card.style.order = 1000 + index;
+    
                 const size = formatFileSize(item.metadata?.size || 0);
+    
                 card.innerHTML = `
                     <span class="file-icon">📄</span>
                     <div class="file-name">${item.name}</div>
@@ -711,25 +725,27 @@
                     </div>
                 `;
             }
+    
             grid.appendChild(card);
         });
-
-        // Edit mode: add "Upload PDF here" + "New Folder here" cards
+    
+        // ➕ ADD BUTTONS (keep at end)
         if (isOwner) {
             const addPDF = document.createElement('div');
             addPDF.className = 'add-pdf-card';
-            addPDF.innerHTML = `<div class="plus">⬆</div><div class="label">UPLOAD PDF HERE</div><div class="sublabel">click to select files</div>`;
+            addPDF.style.order = 9999;
+            addPDF.innerHTML = `<div class="plus">⬆</div><div class="label">UPLOAD PDF HERE</div>`;
             addPDF.onclick = () => triggerUploadHere();
             grid.appendChild(addPDF);
-
+    
             const addFolder = document.createElement('div');
             addFolder.className = 'add-folder-card';
-            addFolder.innerHTML = `<div class="plus">📁</div><div class="label">NEW FOLDER HERE</div><div class="sublabel">click to create</div>`;
+            addFolder.style.order = 10000;
+            addFolder.innerHTML = `<div class="plus">📁</div><div class="label">NEW FOLDER HERE</div>`;
             addFolder.onclick = () => promptNewFolder();
             grid.appendChild(addFolder);
         }
     }
-
     // ── NAVIGATION ──
     function navigateToFolder(name) {
         currentPath.push(name);
