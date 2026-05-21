@@ -564,43 +564,8 @@
                 </div>
         </header>
 
-        <!-- Owner Controls -->
-        <div id="ownerControls" class="owner-controls">
-            <div class="control-header">
-                <h3>📤 Manage PDFs</h3>
-            </div>
-
-            <!-- Context bar: shows current upload destination -->
-            <div id="uploadDestBar" style="background:var(--bg-secondary);border:1px solid var(--border-color);border-radius:10px;padding:11px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                <span style="font-size:0.92em;color:var(--text-secondary);">📂 Upload destination: <strong id="uploadDestLabel" style="color:var(--accent-primary);">Root</strong></span>
-                <div style="display:flex;gap:8px;align-items:center;">
-                    <button id="newFolderInlineBtn" onclick="showInlineFolderInput()" style="padding:5px 13px;background:var(--bg-card);color:var(--text-primary);border:1px solid var(--border-color);border-radius:7px;cursor:pointer;font-size:0.83em;">📁 New Folder Here</button>
-                </div>
-            </div>
-
-            <!-- Inline new-folder input (hidden by default) -->
-            <div id="inlineFolderInput" style="display:none;background:var(--bg-secondary);border:1px dashed var(--accent-secondary);border-radius:10px;padding:14px 16px;margin-bottom:14px;">
-                <label style="color:var(--text-secondary);font-size:0.88em;display:block;margin-bottom:7px;">New folder name inside <strong id="inlineFolderParentLabel" style="color:var(--accent-primary);">Root</strong>:</label>
-                <div style="display:flex;gap:8px;">
-                    <input type="text" id="inlineFolderName" placeholder="e.g., UNIT-2" style="flex:1;padding:9px 13px;background:var(--bg-primary);border:1px solid var(--border-color);border-radius:8px;color:var(--text-primary);font-family:Outfit,sans-serif;font-size:0.95em;">
-                    <button onclick="createFolderInline()" style="padding:9px 18px;background:linear-gradient(135deg,var(--accent-primary),var(--accent-secondary));color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;">Create</button>
-                    <button onclick="document.getElementById('inlineFolderInput').style.display='none'" style="padding:9px 14px;background:var(--bg-card);color:var(--text-secondary);border:1px solid var(--border-color);border-radius:8px;cursor:pointer;">✕</button>
-                </div>
-            </div>
-
-            <!-- Upload area -->
-            <div class="upload-area" onclick="document.getElementById('pdfUpload').click()" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
-                <div class="upload-icon">📄</div>
-                <div style="font-weight:600;margin-bottom:5px;">Click or drag PDFs here</div>
-                <div style="font-size:0.85em;color:var(--text-secondary);">Supports multiple files</div>
-                <input type="file" id="pdfUpload" accept=".pdf" multiple onchange="handleFileSelect(event)">
-            </div>
-            <div id="selectedFilesLabel" style="margin-top:8px;font-size:0.85em;color:var(--accent-success);min-height:20px;"></div>
-
-            <div style="margin-top:12px;display:flex;gap:10px;">
-                <button class="btn-success" onclick="uploadPDFs()" style="flex:1;">⬆️ Upload Here</button>
-            </div>
-        </div>
+        <!-- Hidden file input for uploads -->
+        <input type="file" id="pdfUpload" accept=".pdf" multiple onchange="handleFileSelect(event)" style="display:none;">
 
         <!-- Breadcrumb -->
         <div class="breadcrumb" id="breadcrumb">
@@ -671,8 +636,6 @@
             }
 
             if (isOwner) {
-                document.getElementById('ownerControls').classList.add('active');
-                updateUploadDest([]);
                 showToast('✏️ Edit mode active — navigate into a folder and click Add PDF', 'success');
             }
 
@@ -780,8 +743,7 @@
                 addCard.onclick = () => {
                     updateUploadDest(currentPath);
                     document.getElementById('pdfUpload').click();
-                    document.getElementById('ownerControls').scrollIntoView({behavior:'smooth'});
-                };
+                        };
                 grid.appendChild(addCard);
             }
         }
@@ -834,7 +796,7 @@
             selectedFiles = Array.from(event.target.files);
             if (selectedFiles.length > 0) {
                 const names = selectedFiles.map(f => f.name).join(', ');
-                document.getElementById('selectedFilesLabel').textContent = `📎 ${selectedFiles.length} file(s): ${names}`;
+                showToast(`📎 ${selectedFiles.length} file(s) selected`, 'success');
             }
         }
 
@@ -885,7 +847,7 @@
                 showToast(`✅ ${selectedFiles.length} file(s) uploaded!`, 'success');
                 selectedFiles = [];
                 document.getElementById('pdfUpload').value = '';
-                document.getElementById('selectedFilesLabel').textContent = '';
+
                 // Navigate to where we just uploaded
                 currentPath = [...uploadTargetPath];
                 updateBreadcrumb();
@@ -896,49 +858,38 @@
         }
 
         function showInlineFolderInput() {
-            const label = uploadTargetPath.length > 0 ? uploadTargetPath.join(' / ') : 'Root';
-            document.getElementById('inlineFolderParentLabel').textContent = label;
-            document.getElementById('inlineFolderInput').style.display = 'block';
-            document.getElementById('inlineFolderName').focus();
+            const name = prompt('New folder name:');
+            if (name && name.trim()) {
+                createFolderWithName(name.trim());
+            }
         }
 
-        async function createFolderInline() {
-            const name = document.getElementById('inlineFolderName').value.trim();
-            if (!name) { showToast('Enter a folder name', 'error'); return; }
-
+        async function createFolderWithName(name) {
             const basePath = uploadTargetPath.length > 0 ? uploadTargetPath.join('/') + '/' : '';
             const folderPath = `${basePath}${name}/.keep`;
-
             try {
                 const { error } = await db.storage.from('pdfs').upload(folderPath, new Blob([''], { type: 'text/plain' }), { cacheControl: '3600', upsert: false });
                 if (error && !error.message.includes('already exists')) throw error;
-                showToast(`📁 Folder "${name}" created!`, 'success');
-                document.getElementById('inlineFolderName').value = '';
-                document.getElementById('inlineFolderInput').style.display = 'none';
+                showToast(`📁 "${name}" created!`, 'success');
                 loadFiles();
             } catch (error) {
-                showToast('Error creating folder: ' + error.message, 'error');
+                showToast('Error: ' + error.message, 'error');
             }
         }
 
         function updateUploadDest(path) {
             uploadTargetPath = [...path];
-            const label = path.length > 0 ? path.join(' / ') : 'Root (choose a folder)';
-            document.getElementById('uploadDestLabel').textContent = label;
-            document.getElementById('uploadDestLabel').style.color = path.length > 0 ? 'var(--accent-success)' : 'var(--accent-primary)';
         }
 
         function enterFolderForUpload(folderName) {
             const path = [...currentPath, folderName];
             updateUploadDest(path);
-            document.getElementById('ownerControls').scrollIntoView({ behavior: 'smooth' });
             document.getElementById('pdfUpload').click();
         }
 
         function enterFolderForSubfolder(folderName) {
             const path = [...currentPath, folderName];
             updateUploadDest(path);
-            document.getElementById('ownerControls').scrollIntoView({ behavior: 'smooth' });
             showInlineFolderInput();
         }
 
