@@ -206,12 +206,11 @@ input[type=text]:focus{border-color:var(--green-dim);box-shadow:0 0 0 3px rgba(3
 <!-- ══ PASSWORD GATE ══ -->
 <div id="passGate">
   <div class="pass-box">
-    <h2>// EDIT MODE ACCESS</h2>
+    <h2>EDIT MODE ACCESS</h2>
     <p>Enter password to unlock edit mode</p>
     <input type="password" class="pass-input" id="passInput" placeholder="••••••••••••" onkeydown="if(event.key==='Enter')checkPass()">
     <div class="pass-error" id="passError">⚠ Incorrect password</div>
     <button class="btn btn-g" style="width:100%;padding:11px;" onclick="checkPass()">Unlock →</button>
-    <div class="pass-hint">Hint: name@year format</div>
   </div>
 </div>
 
@@ -242,9 +241,6 @@ input[type=text]:focus{border-color:var(--green-dim);box-shadow:0 0 0 3px rgba(3
     <div class="sidebar-label" style="margin-top:8px;">Quick Access</div>
     <div id="sidebarFolders"></div>
     <div class="sidebar-bottom" id="sidebarInfo">
-      STORAGE: Supabase<br>
-      BUCKET: pdfs<br>
-      <span id="sidePathLabel">PATH: /</span>
     </div>
   </aside>
 
@@ -257,14 +253,6 @@ input[type=text]:focus{border-color:var(--green-dim);box-shadow:0 0 0 3px rgba(3
         <span class="bc-item active" onclick="navigateTo([])">⌂ root</span>
       </div>
       <div class="topbar-right" id="topbarRight"></div>
-    </div>
-
-    <!-- stat bar -->
-    <div class="statbar">
-      <div class="stat-card"><div class="stat-icon si-g">📁</div><div><div class="stat-val" id="stFolders">—</div><div class="stat-lbl">Folders</div></div></div>
-      <div class="stat-card"><div class="stat-icon si-b">📄</div><div><div class="stat-val" id="stFiles">—</div><div class="stat-lbl">Files</div></div></div>
-      <div class="stat-card"><div class="stat-icon si-o">💾</div><div><div class="stat-val" id="stSize">—</div><div class="stat-lbl">Size</div></div></div>
-      <div class="stat-card"><div class="stat-icon si-p">📂</div><div><div class="stat-val" id="stDepth">—</div><div class="stat-lbl">Depth</div></div></div>
     </div>
 
     <!-- preview banner -->
@@ -354,7 +342,7 @@ function init(){
 // ══ PASSWORD ══
 function checkPass(){
   const val=document.getElementById('passInput').value;
-  if(val===atob(_sk)){
+  if(val === _sk){
     document.getElementById('passGate').classList.remove('on');
     activateEditMode();
   } else {
