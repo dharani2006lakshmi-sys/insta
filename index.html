@@ -466,7 +466,7 @@ function renderFiles(items){
 
   items.forEach((item,idx)=>{
     const card=document.createElement('div');
-    if(item.id===null){
+    if (!item.metadata){
       // FOLDER
       card.className='card folder';
       card.dataset.name=item.name;
