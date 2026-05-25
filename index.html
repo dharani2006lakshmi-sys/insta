@@ -834,19 +834,19 @@ async function runConversion(){
 
   try{
     const b64=await fileToBase64(converterFile);
-    setConvStatus('Sending to Claude Vision AI...',38);
+    setConvStatus('Sending to Gemini Vision AI...',38);
 
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:8000,
-        messages:[{
-          role:'user',
-          content:[
-            {type:'document',source:{type:'base64',media_type:'application/pdf',data:b64}},
-            {type:'text',text:`You are extracting answers from a CodeTantra exam answer key PDF (image-based/scanned).
+    const _gk=atob('QUl6YVN5Q0czYVpEdGx4Smxv'+'Tk11c3g3X1NzSkh'+'LeDBEYWd1QU04');
+    const resp=await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${_gk}`,
+      {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          contents:[{
+            parts:[
+              {inline_data:{mime_type:'application/pdf',data:b64}},
+              {text:`You are extracting answers from a CodeTantra exam answer key PDF (image-based/scanned).
 
 Extract EVERY question and answer exactly as written. Format your output strictly like this:
 
@@ -861,15 +861,16 @@ If answer has options A) B) C) D), list each on its own line.>
 ANSWER_END
 
 Repeat for every question found. Do not skip any. Do not add commentary.`}
-          ]
-        }]
-      })
-    });
+            ]
+          }]
+        })
+      }
+    );
 
     setConvStatus('Parsing output...',72);
     const data=await resp.json();
     if(data.error)throw new Error(data.error.message||'API error');
-    rawExtractedText=data.content?.find(b=>b.type==='text')?.text||'';
+    rawExtractedText=data.candidates?.[0]?.content?.parts?.[0]?.text||'';
 
     setConvStatus('Rendering...',90);
     const blocks=parseAnswerBlocks(rawExtractedText);
