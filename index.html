@@ -836,9 +836,9 @@ async function runConversion(){
     const b64=await fileToBase64(converterFile);
     setConvStatus('Sending to Gemini Vision AI...',38);
 
-    const _gk='AIzaSyBYhUfjgULhaVviVZl58RTYJ4cIauCQue4';
+    const _gk='AIzaSyBoFteL-wZzgAVGqP2y_eQpW8T1Rvx0QLE';
     const resp=await fetch(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${_gk}`,
+      `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-pro:generateContent?key=${_gk}`,
       {
         method:'POST',
         headers:{'Content-Type':'application/json'},
