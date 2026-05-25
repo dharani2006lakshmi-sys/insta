@@ -195,7 +195,8 @@ button{cursor:pointer;border:none;border-radius:8px;font-family:var(--font);font
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:998;align-items:center;justify-content:center;backdrop-filter:blur(6px);}
 .modal.on{display:flex;}
 .modal-box{background:var(--surface);border:1px solid var(--border2);border-radius:12px;width:90%;max-width:440px;box-shadow:0 24px 60px rgba(0,0,0,0.7);overflow:hidden;}
-.modal-box.wide{max-width:680px;}
+.modal-box.wide{max-width:780px;}
+.modal-box.wide .modal-body{max-height:70vh;overflow-y:auto;}
 .modal-head{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid var(--border);}
 .modal-head h3{font-size:0.88em;font-weight:600;}
 .modal-close{background:none;border:none;color:var(--text3);font-size:1.1em;cursor:pointer;width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:5px;transition:.15s;}
@@ -218,14 +219,42 @@ textarea{resize:vertical;min-height:120px;font-size:0.8em;line-height:1.6;}
 .conv-bar-wrap{background:var(--border);border-radius:20px;height:4px;margin:10px 0;}
 .conv-bar{height:4px;background:linear-gradient(90deg,var(--purple),var(--accent2));border-radius:20px;width:0%;transition:width .4s;}
 .conv-status{font-size:0.73em;color:var(--text2);font-family:var(--mono);}
-.conv-result{background:var(--surface3);border:1px solid var(--border2);border-radius:8px;padding:14px;margin-top:14px;display:none;max-height:220px;overflow-y:auto;}
+/* result area */
+.conv-result{border:1px solid var(--border2);border-radius:8px;margin-top:14px;display:none;overflow:hidden;}
 .conv-result.on{display:block;}
-.conv-result pre{font-family:var(--mono);font-size:0.78em;color:var(--text);white-space:pre-wrap;line-height:1.6;}
-.conv-result-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.conv-result-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--surface2);border-bottom:1px solid var(--border);}
 .conv-result-header span{font-size:0.7em;color:var(--accent);font-family:var(--mono);}
-.conv-pages-nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
-.page-btn{padding:4px 10px;font-size:0.7em;background:var(--surface2);color:var(--text3);border:1px solid var(--border);border-radius:5px;cursor:pointer;font-family:var(--mono);}
-.page-btn.active{background:rgba(155,109,255,0.15);color:var(--purple);border-color:rgba(155,109,255,0.3);}
+.conv-result-actions{display:flex;gap:6px;}
+.conv-output{padding:14px;max-height:420px;overflow-y:auto;background:var(--surface3);}
+/* question blocks */
+.q-block{margin-bottom:18px;border-radius:9px;overflow:hidden;border:1px solid var(--border);}
+.q-header{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:var(--surface2);border-bottom:1px solid var(--border);}
+.q-num{font-family:var(--mono);font-size:0.72em;font-weight:600;color:var(--accent);background:rgba(0,212,170,0.1);padding:2px 9px;border-radius:4px;}
+.q-copy-btn{background:transparent;border:1px solid var(--border2);color:var(--text3);padding:3px 9px;font-size:0.68em;border-radius:5px;cursor:pointer;font-family:var(--mono);transition:.15s;}
+.q-copy-btn:hover{border-color:var(--accent);color:var(--accent);}
+.q-body{padding:12px 14px;}
+.q-text{font-size:0.82em;color:var(--text2);line-height:1.65;white-space:pre-wrap;}
+/* code block inside question */
+.code-block{margin-top:10px;border-radius:7px;overflow:hidden;border:1px solid var(--border);}
+.code-header{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:#0d1117;border-bottom:1px solid var(--border);}
+.code-lang{font-family:var(--mono);font-size:0.65em;color:var(--text3);letter-spacing:.5px;}
+.code-copy-btn{background:transparent;border:none;color:var(--text3);font-size:0.7em;cursor:pointer;font-family:var(--mono);padding:2px 7px;border-radius:4px;transition:.15s;}
+.code-copy-btn:hover{color:var(--accent);background:rgba(0,212,170,0.08);}
+.code-body{background:#0d1117;padding:12px 14px;overflow-x:auto;}
+.code-body code{font-family:var(--mono);font-size:0.78em;line-height:1.7;color:#e2e8f0;white-space:pre;}
+/* syntax tokens */
+.tok-kw{color:#ff79c6;}
+.tok-fn{color:#50fa7b;}
+.tok-str{color:#f1fa8c;}
+.tok-num{color:#bd93f9;}
+.tok-cmt{color:#6272a4;font-style:italic;}
+.tok-type{color:#8be9fd;}
+.tok-op{color:#ff79c6;}
+/* plain text block (non-code answer) */
+.plain-answer{font-family:var(--mono);font-size:0.78em;color:var(--text);line-height:1.7;white-space:pre-wrap;padding:4px 0;}
+/* options like A) B) C) D) */
+.option-line{padding:3px 0;font-size:0.8em;font-family:var(--mono);color:var(--text2);}
+.option-line b{color:var(--accent2);}
 
 /* ── TOAST ── */
 .toast{position:fixed;bottom:22px;right:22px;background:var(--surface);border:1px solid var(--border2);padding:12px 18px;border-radius:9px;font-size:0.78em;font-family:var(--mono);box-shadow:var(--shadow);z-index:9000;animation:slideUp .25s ease;max-width:300px;}
@@ -366,15 +395,15 @@ textarea{resize:vertical;min-height:120px;font-size:0.8em;line-height:1.6;}
 <div class="modal" id="converterModal">
   <div class="modal-box wide">
     <div class="modal-head">
-      <h3>✦ PDF Image → Selectable Text Converter</h3>
+      <h3>✦ PDF Image → Editable Text Converter</h3>
       <button class="modal-close" onclick="closeModal('converterModal')">×</button>
     </div>
     <div class="modal-body">
-      <p style="font-size:.78em;color:var(--text2);margin-bottom:14px;line-height:1.6;">Upload an image-based PDF. Claude AI will extract the text so you can copy answers easily.</p>
+      <p style="font-size:.78em;color:var(--text2);margin-bottom:14px;line-height:1.6;">Upload an image-based PDF. Claude AI reads every page and formats questions + code blocks so you can copy answers easily.</p>
       <div class="converter-drop" id="converterDrop" onclick="document.getElementById('converterInput').click()" ondrop="handleConverterDrop(event)" ondragover="event.preventDefault();this.classList.add('drag-active')" ondragleave="this.classList.remove('drag-active')">
         <div style="font-size:2em;opacity:.4;">📄</div>
         <p>Click or drag & drop an image-based PDF here</p>
-        <p style="font-size:.67em;margin-top:4px;">Max ~20 pages recommended for best results</p>
+        <p style="font-size:.67em;margin-top:4px;">Max ~20 pages recommended</p>
       </div>
       <div id="selectedFileInfo" style="display:none;margin-top:10px;font-size:.75em;font-family:var(--mono);color:var(--text2);padding:8px 12px;background:var(--surface2);border-radius:6px;"></div>
       <div class="conv-progress" id="convProgress">
@@ -383,19 +412,18 @@ textarea{resize:vertical;min-height:120px;font-size:0.8em;line-height:1.6;}
       </div>
       <div class="conv-result" id="convResult">
         <div class="conv-result-header">
-          <span>Extracted Text</span>
-          <div style="display:flex;gap:6px;">
+          <span id="convResultCount">Extracted Answers</span>
+          <div class="conv-result-actions">
             <button class="btn btn-ghost btn-sm" onclick="copyAllText()">📋 Copy All</button>
             <button class="btn btn-accent btn-sm" onclick="downloadText()">⬇ Download .txt</button>
           </div>
         </div>
-        <div class="conv-pages-nav" id="convPagesNav"></div>
-        <pre id="convTextOutput"></pre>
+        <div class="conv-output" id="convOutput"></div>
       </div>
     </div>
     <div class="modal-foot">
       <button class="btn btn-ghost" onclick="closeModal('converterModal');resetConverter()">Close</button>
-      <button class="btn btn-purple" id="convRunBtn" onclick="runConversion()" style="display:none;">✦ Extract Text with AI</button>
+      <button class="btn btn-purple" id="convRunBtn" onclick="runConversion()" style="display:none;">✦ Extract with AI</button>
     </div>
   </div>
 </div>
@@ -776,7 +804,8 @@ async function confirmRename(){
   }catch(e){showToast('Rename error: '+e.message,'e');}
 }
 
-// ── CONVERTER (PDF image → text via Claude Vision) ──
+// ── CONVERTER ──
+let rawExtractedText='';
 function openConverter(){openModal('converterModal');}
 function handleConverterDrop(e){
   e.preventDefault();document.getElementById('converterDrop').classList.remove('drag-active');
@@ -788,63 +817,72 @@ function handleConverterFile(e){const f=e.target.files[0];if(f)setConverterFile(
 function setConverterFile(f){
   converterFile=f;
   const info=document.getElementById('selectedFileInfo');
-  info.textContent=`Selected: ${f.name} (${formatSize(f.size)})`;
+  info.textContent=`📄 ${f.name}  ·  ${formatSize(f.size)}`;
   info.style.display='block';
   document.getElementById('convRunBtn').style.display='block';
   document.getElementById('convResult').classList.remove('on');
   document.getElementById('convProgress').classList.remove('on');
+  document.getElementById('convOutput').innerHTML='';
 }
 
 async function runConversion(){
   if(!converterFile){showToast('No file selected','e');return;}
   const btn=document.getElementById('convRunBtn');
-  btn.disabled=true;btn.textContent='Processing...';
-  const prog=document.getElementById('convProgress');
-  prog.classList.add('on');
-  setConvStatus('Reading PDF pages...',10);
+  btn.disabled=true;btn.textContent='Extracting...';
+  document.getElementById('convProgress').classList.add('on');
+  setConvStatus('Reading PDF...',12);
 
   try{
-    // Read file as base64
     const b64=await fileToBase64(converterFile);
-    setConvStatus('Sending to Claude Vision AI...',35);
+    setConvStatus('Sending to Claude Vision AI...',38);
 
-    // Call Claude API with the PDF as a document
     const resp=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         model:'claude-sonnet-4-20250514',
-        max_tokens:4000,
+        max_tokens:8000,
         messages:[{
           role:'user',
           content:[
-            {
-              type:'document',
-              source:{type:'base64',media_type:'application/pdf',data:b64}
-            },
-            {
-              type:'text',
-              text:`Extract ALL text from every page of this PDF. This is an image-based PDF (scanned document). Extract every question, answer, option (A/B/C/D), and all text content exactly as shown. Format it clearly with page separators like "--- Page N ---". Preserve numbering, options, and structure. Output only the extracted text, nothing else.`
-            }
+            {type:'document',source:{type:'base64',media_type:'application/pdf',data:b64}},
+            {type:'text',text:`You are extracting answers from a CodeTantra exam answer key PDF (image-based/scanned).
+
+Extract EVERY question and answer exactly as written. Format your output strictly like this:
+
+QUESTION: <question number like 6.1.1 or Q1 or 1.>
+QUESTION_TEXT: <the question text if visible, or leave empty>
+ANSWER_START
+<the full answer text here. If it contains code (SQL, Python, C, Java, PL/pgSQL etc), wrap the code portion in triple backticks with the language name like:
+\`\`\`sql
+SELECT * FROM table;
+\`\`\`
+If answer has options A) B) C) D), list each on its own line.>
+ANSWER_END
+
+Repeat for every question found. Do not skip any. Do not add commentary.`}
           ]
         }]
       })
     });
 
-    setConvStatus('Extracting text...',70);
+    setConvStatus('Parsing output...',72);
     const data=await resp.json();
     if(data.error)throw new Error(data.error.message||'API error');
-    const text=data.content?.find(b=>b.type==='text')?.text||'No text extracted';
+    rawExtractedText=data.content?.find(b=>b.type==='text')?.text||'';
 
+    setConvStatus('Rendering...',90);
+    const blocks=parseAnswerBlocks(rawExtractedText);
+    renderAnswerBlocks(blocks);
     setConvStatus('Done!',100);
-    extractedPages=text.split(/---\s*Page\s*\d+\s*---/i).filter(p=>p.trim());
-    displayConvResult(text,extractedPages);
-    showToast('✅ Text extracted successfully!','s');
+    document.getElementById('convResultCount').textContent=`${blocks.length} answer block${blocks.length!==1?'s':''} extracted`;
+    document.getElementById('convResult').classList.add('on');
+    showToast(`✅ ${blocks.length} answers extracted!`,'s');
   }catch(e){
     setConvStatus('Error: '+e.message,0);
-    showToast('Conversion error: '+e.message,'e');
+    showToast('Error: '+e.message,'e');
   }finally{
-    btn.disabled=false;btn.textContent='✦ Extract Text with AI';
+    btn.disabled=false;btn.textContent='✦ Extract with AI';
   }
 }
 
@@ -853,48 +891,172 @@ function setConvStatus(msg,pct){
   document.getElementById('convBar').style.width=pct+'%';
 }
 
-function displayConvResult(fullText,pages){
-  const res=document.getElementById('convResult');
-  res.classList.add('on');
-  document.getElementById('convTextOutput').textContent=fullText;
-  const nav=document.getElementById('convPagesNav');
-  nav.innerHTML='<button class="page-btn active" onclick="showPage(-1,this)">All</button>';
-  pages.forEach((p,i)=>{
-    const b=document.createElement('button');
-    b.className='page-btn';b.textContent='Pg '+(i+1);
-    b.onclick=function(){showPage(i,this);};
-    nav.appendChild(b);
+// Parse the structured output into blocks
+function parseAnswerBlocks(text){
+  const blocks=[];
+  // Split on QUESTION: markers
+  const parts=text.split(/(?=QUESTION:\s*)/i);
+  for(const part of parts){
+    const trimmed=part.trim();
+    if(!trimmed)continue;
+    const qMatch=trimmed.match(/^QUESTION:\s*(.+)/im);
+    const qtMatch=trimmed.match(/QUESTION_TEXT:\s*(.*)/im);
+    const ansMatch=trimmed.match(/ANSWER_START\s*([\s\S]*?)\s*ANSWER_END/im);
+    if(qMatch){
+      blocks.push({
+        num:(qMatch[1]||'').trim(),
+        qtext:(qtMatch&&qtMatch[1]?qtMatch[1].trim():''),
+        answer:(ansMatch?ansMatch[1].trim():trimmed.replace(/QUESTION:.*/i,'').replace(/QUESTION_TEXT:.*/i,'').trim())
+      });
+    }
+  }
+  // fallback: if parsing failed (no markers), show as one block
+  if(blocks.length===0&&text.trim()){
+    blocks.push({num:'Extracted',qtext:'',answer:text.trim()});
+  }
+  return blocks;
+}
+
+// Render blocks as ChatGPT-style cards
+function renderAnswerBlocks(blocks){
+  const out=document.getElementById('convOutput');
+  out.innerHTML='';
+  blocks.forEach((block,i)=>{
+    const div=document.createElement('div');
+    div.className='q-block';
+
+    const headerDiv=document.createElement('div');
+    headerDiv.className='q-header';
+    headerDiv.innerHTML=`<span class="q-num">◆ ${escHtml(block.num)}</span>
+      <button class="q-copy-btn" onclick="copyBlock(${i})">📋 Copy</button>`;
+    div.appendChild(headerDiv);
+
+    const body=document.createElement('div');
+    body.className='q-body';
+
+    if(block.qtext){
+      const qt=document.createElement('div');
+      qt.className='q-text';
+      qt.style.marginBottom='8px';
+      qt.textContent=block.qtext;
+      body.appendChild(qt);
+    }
+
+    // Render answer — detect code blocks
+    const answerHtml=renderAnswerContent(block.answer);
+    const ansDiv=document.createElement('div');
+    ansDiv.innerHTML=answerHtml;
+    body.appendChild(ansDiv);
+
+    div.appendChild(body);
+    out.appendChild(div);
   });
 }
 
-function showPage(idx,btn){
-  document.querySelectorAll('.page-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  if(idx===-1){
-    document.getElementById('convTextOutput').textContent=extractedPages.join('\n\n--- Page Break ---\n\n');
-  }else{
-    document.getElementById('convTextOutput').textContent=extractedPages[idx]||'';
+function renderAnswerContent(answer){
+  // Split on ```lang ... ``` fences
+  const parts=answer.split(/(```[\s\S]*?```)/g);
+  let html='';
+  for(const part of parts){
+    const fenceMatch=part.match(/^```(\w*)\n?([\s\S]*?)```$/);
+    if(fenceMatch){
+      const lang=(fenceMatch[1]||'code').toLowerCase()||'code';
+      const code=fenceMatch[2];
+      html+=`<div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">&lt;/&gt; ${lang.toUpperCase()}</span>
+          <button class="code-copy-btn" onclick="copyCode(this)">📋 copy</button>
+        </div>
+        <div class="code-body"><code>${syntaxHighlight(escHtml(code),lang)}</code></div>
+      </div>`;
+    } else if(part.trim()){
+      // Check for options like A) ... B) ... C) ... D) ...
+      const lines=part.split('\n');
+      let lineHtml='';
+      for(const line of lines){
+        const optMatch=line.match(/^([A-Da-d][).])\s+(.*)/);
+        if(optMatch){
+          lineHtml+=`<div class="option-line"><b>${escHtml(optMatch[1])}</b> ${escHtml(optMatch[2])}</div>`;
+        } else {
+          lineHtml+=`<div class="plain-answer">${escHtml(line)}</div>`;
+        }
+      }
+      html+=lineHtml;
+    }
   }
+  return html||`<div class="plain-answer">${escHtml(answer)}</div>`;
+}
+
+// Simple syntax highlighter for common keywords
+function syntaxHighlight(code,lang){
+  let result=code;
+  const SQL_KW=['SELECT','FROM','WHERE','INSERT','INTO','UPDATE','SET','DELETE','CREATE','DROP','ALTER','TABLE','INDEX','VIEW','FUNCTION','PROCEDURE','TRIGGER','BEGIN','END','IF','THEN','ELSE','ELSIF','RETURN','RETURNS','DECLARE','AS','IS','IN','OUT','NOT','NULL','AND','OR','JOIN','LEFT','RIGHT','INNER','OUTER','ON','GROUP BY','ORDER BY','HAVING','LIMIT','OFFSET','CASE','WHEN','RAISE','EXCEPTION','NOTICE','LANGUAGE','VOID','INT','INTEGER','TEXT','VARCHAR','NUMERIC','BOOLEAN','DATE','TIMESTAMP'];
+  const PY_KW=['def','class','import','from','return','if','elif','else','for','while','in','not','and','or','True','False','None','try','except','finally','with','as','pass','break','continue','lambda','yield','global','nonlocal','print','len','range','self'];
+  const C_KW=['int','char','float','double','void','if','else','for','while','do','return','struct','typedef','include','define','printf','scanf','NULL','sizeof','switch','case','break','continue','static','const','unsigned'];
+  const JAVA_KW=['public','private','protected','class','interface','extends','implements','import','package','return','if','else','for','while','do','new','this','super','null','true','false','static','final','void','int','String','boolean','char','double','float','long','try','catch','finally','throw','throws'];
+
+  let kws=[];
+  if(['sql','plpgsql','postgresql'].includes(lang))kws=SQL_KW;
+  else if(lang==='python')kws=PY_KW;
+  else if(['c','cpp','c++'].includes(lang))kws=C_KW;
+  else if(['java','javascript','js'].includes(lang))kws=lang==='java'?JAVA_KW:PY_KW;
+  else kws=[...SQL_KW,...PY_KW,...C_KW];
+
+  // strings
+  result=result.replace(/('(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*")/g,'<span class="tok-str">$1</span>');
+  // comments
+  result=result.replace(/(--[^\n]*|\/\/[^\n]*|\/\*[\s\S]*?\*\/)/g,'<span class="tok-cmt">$1</span>');
+  // numbers
+  result=result.replace(/\b(\d+(\.\d+)?)\b/g,'<span class="tok-num">$1</span>');
+  // keywords (only outside spans)
+  if(kws.length){
+    const kwRegex=new RegExp(`\\b(${kws.join('|')})\\b`,'gi');
+    result=result.replace(kwRegex,(m)=>`<span class="tok-kw">${m}</span>`);
+  }
+  return result;
+}
+
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// Copy a specific block's plain text
+let _blocks=[];
+function copyBlock(i){
+  // rebuild plain text for block i
+  const out=document.getElementById('convOutput');
+  const blockEls=out.querySelectorAll('.q-block');
+  if(!blockEls[i])return;
+  const textParts=[];
+  const num=blockEls[i].querySelector('.q-num')?.textContent||'';
+  textParts.push(num);
+  blockEls[i].querySelectorAll('.code-body code,.plain-answer,.option-line').forEach(el=>{
+    textParts.push(el.textContent);
+  });
+  navigator.clipboard.writeText(textParts.join('\n')).then(()=>showToast('📋 Copied!','s')).catch(()=>showToast('Copy failed','e'));
+}
+
+function copyCode(btn){
+  const code=btn.closest('.code-block').querySelector('code')?.textContent||'';
+  navigator.clipboard.writeText(code).then(()=>{btn.textContent='✓ copied';setTimeout(()=>btn.textContent='📋 copy',1500);}).catch(()=>showToast('Copy failed','e'));
 }
 
 function copyAllText(){
-  const t=document.getElementById('convTextOutput').textContent;
-  navigator.clipboard.writeText(t).then(()=>showToast('📋 Copied to clipboard!','s')).catch(()=>showToast('Copy failed','e'));
+  navigator.clipboard.writeText(rawExtractedText||'Nothing extracted yet').then(()=>showToast('📋 Copied all!','s')).catch(()=>showToast('Copy failed','e'));
 }
 
 function downloadText(){
-  const t=document.getElementById('convTextOutput').textContent;
-  const name=(converterFile?.name||'extracted').replace(/\.pdf$/i,'')+'-text.txt';
+  const t=rawExtractedText||'Nothing extracted';
+  const name=(converterFile?.name||'extracted').replace(/\.pdf$/i,'')+'-answers.txt';
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/plain'}));a.download=name;a.click();
   showToast('⬇ Downloaded!','s');
 }
 
 function resetConverter(){
-  converterFile=null;extractedPages=[];
+  converterFile=null;extractedPages=[];rawExtractedText='';
   document.getElementById('selectedFileInfo').style.display='none';
   document.getElementById('convRunBtn').style.display='none';
   document.getElementById('convProgress').classList.remove('on');
   document.getElementById('convResult').classList.remove('on');
+  document.getElementById('convOutput').innerHTML='';
   document.getElementById('converterInput').value='';
 }
 
